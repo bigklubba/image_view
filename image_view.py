@@ -18,6 +18,14 @@ types = ('*.png', '*.gif', '*.jpg', '*.jpeg')
 
 class MainWindow():
 
+    def on_key_press(self, widget, event):
+        if event.keyval == gtk.keysyms.Right:
+            self.next(0)
+        elif event.keyval == gtk.keysyms.Left:
+            self.prev(0)
+        elif event.keyval == gtk.keysyms.Delete:
+            self.delete(0)
+
     def next(self, id):
         if len(self.directory_images_paths) == 0:
                 return
@@ -86,6 +94,8 @@ class MainWindow():
         self.path = path
         self.main_window = gtk.Window()
         self.main_window.connect('destroy', self.close_window)
+        self.main_window.connect('key_press_event', self.on_key_press)
+        self.main_window.set_events(gtk.gdk.KEY_PRESS_MASK)
         self.main_window.set_title(title)
         self.main_window.set_default_size(MAX_HEIGHT + PADDING, MAX_WIDTH + PADDING)
         self.main_window.set_position(gtk.WIN_POS_CENTER)
