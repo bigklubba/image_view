@@ -25,6 +25,13 @@ class MainWindow():
             self.prev(0)
         elif event.keyval == gtk.keysyms.Delete:
             self.delete(0)
+        elif event.keyval == gtk.keysyms.Up:
+            a = self.get_max_height_and_max_width_on_current_monitor()
+            global MAX_HEIGHT
+            global MAX_WIDTH
+            MAX_HEIGHT = a[0]-PADDING
+            MAX_WIDTH = a[1]
+            self.main_window.resize(MAX_WIDTH, MAX_HEIGHT)
 
     def next(self, id):
         if len(self.directory_images_paths) == 0:
@@ -132,6 +139,12 @@ class MainWindow():
 
     def show(self):
         self.main_window.show_all()
+
+    def get_max_height_and_max_width_on_current_monitor(self):
+        screen = self.main_window.get_screen()
+        curmonitor = screen.get_monitor_at_window(screen.get_active_window())
+        mg = screen.get_monitor_geometry(curmonitor)
+        return mg.height, mg.width
 
     @staticmethod
     def close_window(self):
