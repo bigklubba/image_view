@@ -81,17 +81,16 @@ class MainWindow():
         self.current_image.show()
 
     def get_scaled_size(self, pixbuf):
-        orig_height = pixbuf.get_height()
-        orig_width = pixbuf.get_width()
+        height = pixbuf.get_height()
+        width = pixbuf.get_width()
+        
+        new_height = int(height * (MAX_WIDTH /float(width)))
+        new_width = MAX_WIDTH
 
-        if orig_height > orig_width:
-            height = MAX_HEIGHT
-            width = int(MAX_WIDTH * (orig_width/float(orig_height)))
-        else:
-            height = int(MAX_HEIGHT * (orig_height/float(orig_width)))
-            width = MAX_WIDTH
-
-        return [height, width]
+        if new_height > MAX_HEIGHT:
+            new_width = int(width * (MAX_HEIGHT/float(height)))
+            new_height = MAX_HEIGHT
+        return [new_height, new_width]
 
     def get_files(self):
         for files in types:
@@ -144,6 +143,8 @@ class MainWindow():
         screen = self.main_window.get_screen()
         curmonitor = screen.get_monitor_at_window(screen.get_active_window())
         mg = screen.get_monitor_geometry(curmonitor)
+	print mg.height
+	print mg.width
         return mg.height, mg.width
 
     @staticmethod
