@@ -79,6 +79,7 @@ class MainWindow():
         scaled_buf = pixbuf.scale_simple(scaled_size[1], scaled_size[0], gtk.gdk.INTERP_BILINEAR)
         self.current_image.set_from_pixbuf(scaled_buf)
         self.current_image.show()
+        self.main_window.set_title(self.directory_images_paths[self.current_image_index])
 
     def get_scaled_size(self, pixbuf):
         height = pixbuf.get_height()
