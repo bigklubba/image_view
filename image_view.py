@@ -36,7 +36,6 @@ class MainWindow():
     def next(self, id):
         if len(self.directory_images_paths) == 0:
                 return
-        
         if self.current_image_index+1 == len(self.directory_images_paths):
                 return
         self.current_image_index += 1
@@ -55,22 +54,20 @@ class MainWindow():
 
         if len(self.directory_images_paths) == 0:
                 self.current_image_index = 0
-                self.current_image.hide()               
+                self.current_image.hide()
                 return
-
         self.directory_images_paths.pop(self.current_image_index)
         if len(self.directory_images_paths) == 0:
                 self.current_image_index = 0
-                self.current_image.hide()               
+                self.current_image.hide()
                 return
 
         if (self.current_image_index+1) > len(self.directory_images_paths):
             self.current_image_index -= 1
-        
         if self.current_image_index >= 0:
                 self.set_image()
         else:
-                self.current_image.hide()        
+                self.current_image.hide()
 
     def set_image(self):
         pixbuf = gtk.gdk.pixbuf_new_from_file(self.directory_images_paths[self.current_image_index])
@@ -84,7 +81,7 @@ class MainWindow():
     def get_scaled_size(self, pixbuf):
         height = pixbuf.get_height()
         width = pixbuf.get_width()
-        
+
         new_height = int(height * (MAX_WIDTH /float(width)))
         new_width = MAX_WIDTH
 
@@ -108,15 +105,15 @@ class MainWindow():
         self.main_window.set_position(gtk.WIN_POS_CENTER)
         self.directory_images_paths=[]
         self.current_image_index=0
-        
+
         self.get_files()
         hbox = gtk.HBox()
-        
+
         vbox = gtk.VBox()
         next_button = gtk.Button()
         next_button.connect('clicked', self.next)
         next_button.set_label("next")
-        
+
         prev_button = gtk.Button()
         prev_button.connect('clicked', self.prev)
         prev_button.set_label("prev")
@@ -132,8 +129,8 @@ class MainWindow():
         hbox.pack_start(prev_button, True, True, 0)
         hbox.pack_start(del_button, True, True, 0)
         hbox.pack_start(next_button, True, True, 0)
-        
-        vbox.pack_start(self.current_image, True, 0)        
+
+        vbox.pack_start(self.current_image, True, 0)
         vbox.pack_start(hbox)
         self.main_window.add(vbox)
 
@@ -144,8 +141,8 @@ class MainWindow():
         screen = self.main_window.get_screen()
         curmonitor = screen.get_monitor_at_window(screen.get_active_window())
         mg = screen.get_monitor_geometry(curmonitor)
-	print mg.height
-	print mg.width
+        print mg.height
+        print mg.width
         return mg.height, mg.width
 
     @staticmethod
